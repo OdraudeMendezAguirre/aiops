@@ -27,15 +27,34 @@ import json
 
 import numpy as np
 import requests
-
+import sys
 # The server URL specifies the endpoint of your server running the linear_model
 # model with the name "linear_model" and using the predict interface.
-SERVER_URL = 'https://linear-model-service-adsoftsito.cloud.okteto.net/v1/models/linear_model:predict'
+SERVER_URL = 'https://linear-model-service-odraudemendezaguirre.cloud.okteto.net/v1/models/linear-model:predict'
 
 
 
 def main():
-  predict_request = '{"instances" : [ [0.0], [1.0], [2.0] ]}'
+  entrada= list(sys.argv)
+  
+  msg=str(entrada)
+  print(msg)
+  
+  entrada.remove("linearmodel_client.py")
+  
+  lista=[]
+
+  for i in range(len(entrada)):
+    numero=float(entrada[i])
+    lista.append([numero])
+    
+  predict_dict = {"instances":lista}
+  predict_request = json.dumps(predict_dict)
+
+
+
+
+
 
   # Send few requests to warm-up the model.
   for _ in range(3):
